@@ -3,127 +3,129 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NOVA Letterbox Preview — 1920×480</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css" />
+<title>NOVA — Ultra-realistic letterbox</title>
+<link rel="stylesheet" href="styles.css?v=4" />
 </head>
 <body>
+  <div id="boot-error" hidden></div>
   <header class="chrome">
-    <div class="chrome-left">
-      <strong>NOVA</strong> letterbox preview
-      <span class="pill">1920×480</span>
-      <span class="pill soft">3D dials</span>
-    </div>
+    <div class="chrome-left"><strong>NOVA</strong> simulation <span class="pill">Three.js 3D dials</span><span class="pill">1920×480</span></div>
     <div class="chrome-right">
-      <button type="button" class="mode-btn active" id="btn-simple">Simple</button>
-      <button type="button" class="mode-btn" id="btn-complete">Complete</button>
+      <button type="button" class="mode-btn" id="btn-simple">Simple</button>
+      <button type="button" class="mode-btn active" id="btn-complete">Complete</button>
       <span class="hint">Tab · 1 / 2</span>
     </div>
   </header>
 
   <div class="stage-wrap">
     <div class="stage" id="stage">
-      <section class="view view-simple active" id="view-simple">
-        <div class="simple-title">N O V A</div>
-        <div class="dials-row three">
-          <div class="dial-card">
-            <canvas class="dial-canvas" width="360" height="360" data-key="down" data-max="200"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="s-down">118.0</span><small>Mbps</small></div>
-              <div class="dial-caption">DOWNLOAD</div>
+      <div class="frame">
+        <!-- COMPLETE (default — matches design) -->
+        <section class="view active" id="view-complete">
+          <div class="top">
+            <div class="clock-box">
+              <div class="clock" id="clock">10:24:37</div>
+              <div class="date" id="date">Sat, 21 Sep 2026</div>
             </div>
-          </div>
-          <div class="dial-card">
-            <canvas class="dial-canvas" width="360" height="360" data-key="up" data-max="200"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="s-up">36.0</span><small>Mbps</small></div>
-              <div class="dial-caption">UPLOAD</div>
+            <div class="brand"><i></i><span>N O V A</span><i></i></div>
+            <div class="ips">
+              <div><em>PUB IP</em> <b id="pub">203.0.113.42</b></div>
+              <div><em>LOC IP</em> <b id="loc">192.168.1.101</b></div>
             </div>
+            <div class="vpn"><span class="lock"></span> VPN CONNECTED</div>
           </div>
-          <div class="dial-card">
-            <canvas class="dial-canvas" width="360" height="360" data-key="ping" data-max="120"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="s-ping">18</span><small>ms</small></div>
-              <div class="dial-caption">PING</div>
-            </div>
-          </div>
-        </div>
-        <div class="simple-footer">
-          <span>Wi-Fi Connected</span>
-          <span class="rule"></span>
-          <span>Ethernet Link</span>
-        </div>
-      </section>
 
-      <section class="view view-complete" id="view-complete">
-        <div class="top-bar">
-          <div class="clock-box">
-            <div class="clock" id="clock">00:00:00</div>
-            <div class="date" id="date">—</div>
-          </div>
-          <div class="brand"><span>NOVA</span></div>
-          <div class="ids">
-            <div><span class="k">PUB IP</span> 104.237.56.12</div>
-            <div><span class="k">LOC IP</span> 192.168.1.105</div>
-          </div>
-          <div class="vpn">VPN CONNECTED</div>
-        </div>
-
-        <div class="complete-grid">
-          <div class="dial-card sm">
-            <canvas class="dial-canvas" width="280" height="280" data-key="down" data-max="100"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="c-down">48.7</span><small>Mbps</small></div>
-              <div class="dial-caption">DOWNLOAD</div>
+          <div class="main">
+            <div class="gauge">
+              <div class="webgl" id="dial-down"></div>
+              <div class="readout"><b id="v-down">48.7</b> <small>Mbps</small></div>
+              <div class="caption">DOWNLOAD</div>
             </div>
-          </div>
-          <div class="dial-card sm">
-            <canvas class="dial-canvas" width="280" height="280" data-key="up" data-max="50"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="c-up">18.3</span><small>Mbps</small></div>
-              <div class="dial-caption">UPLOAD</div>
+            <div class="gauge">
+              <div class="webgl" id="dial-up"></div>
+              <div class="readout"><b id="v-up">18.3</b> <small>Mbps</small></div>
+              <div class="caption">UPLOAD</div>
             </div>
-          </div>
-          <div class="center-col">
-            <div class="panel">
-              <div class="panel-h">THROUGHPUT</div>
-              <canvas id="spark" width="520" height="64"></canvas>
-            </div>
-            <div class="panel path">
-              <div class="panel-h">NETWORK PATH</div>
-              <div class="path-row">
-                <div class="node"><i></i><b>PI</b><small>192.168.1.101</small></div>
-                <div class="seg"></div>
-                <div class="node"><i></i><b>ROUTER</b><small>192.168.1.1</small></div>
-                <div class="seg"></div>
-                <div class="node"><i></i><b>INTERNET</b><small>203.0.113.42</small></div>
+            <div class="mid">
+              <div class="panel">
+                <div class="ph">THROUGHPUT (Mbps)</div>
+                <canvas id="spark" width="480" height="70"></canvas>
+              </div>
+              <div class="panel path">
+                <div class="ph">NETWORK PATH</div>
+                <div class="path-row">
+                  <div class="node"><div class="icon pi"></div><b>PI</b><small>192.168.1.101</small></div>
+                  <div class="wire"></div>
+                  <div class="node"><div class="icon rt"></div><b>ROUTER</b><small>192.168.1.1</small></div>
+                  <div class="wire"></div>
+                  <div class="node"><div class="icon net"></div><b>INTERNET</b><small>203.0.113.42</small></div>
+                </div>
+              </div>
+              <div class="rings">
+                <div class="ring"><canvas id="cpu" width="78" height="78"></canvas><div><span>CPU</span><b id="v-cpu">23%</b></div></div>
+                <div class="ring"><canvas id="ram" width="78" height="78"></canvas><div><span>RAM</span><b id="v-ram">41%</b></div></div>
               </div>
             </div>
-            <div class="mini-row">
-              <div class="mini"><canvas id="cpu" width="64" height="64"></canvas><div><span>CPU</span><b id="cpu-val">23%</b></div></div>
-              <div class="mini"><canvas id="ram" width="64" height="64"></canvas><div><span>RAM</span><b id="ram-val">41%</b></div></div>
+            <div class="gauge">
+              <div class="webgl" id="dial-ping"></div>
+              <div class="readout"><b id="v-ping">14</b> <small>ms</small></div>
+              <div class="caption">PING</div>
             </div>
           </div>
-          <div class="dial-card sm">
-            <canvas class="dial-canvas" width="280" height="280" data-key="ping" data-max="120"></canvas>
-            <div class="dial-meta">
-              <div class="dial-value"><span id="c-ping">14</span><small>ms</small></div>
-              <div class="dial-caption">PING</div>
-            </div>
-          </div>
-        </div>
 
-        <div class="bottom-ribbon">
-          <div class="tile"><div class="th">Wi-Fi</div><div><b>NovaLab_5G</b> · 5 GHz</div><div class="sub">−42 dBm</div></div>
-          <div class="tile"><div class="th">Ethernet</div><div><b>1G LINK</b></div><div class="sub">LINK ON</div></div>
-          <div class="tile"><div class="th">Pi TEMP</div><div><b id="temp">48.7°C</b></div><div class="bar"><i style="width:42%"></i></div></div>
-          <div class="tile"><div class="th">DISK</div><div><b id="disk">31%</b></div><div class="bar"><i style="width:31%"></i></div></div>
-        </div>
-      </section>
+          <div class="ribbon">
+            <div class="tile">
+              <div class="th">Wi-Fi</div>
+              <div class="tv"><span class="sig"></span> <b>NovaLab_5G</b> · 5 GHz</div>
+              <div class="ts">−42 dBm</div>
+            </div>
+            <div class="tile">
+              <div class="th">Ethernet</div>
+              <div class="tv"><span class="port"></span> <b>1G</b> · LINK ON</div>
+              <div class="ts"><i class="dot"></i> Active</div>
+            </div>
+            <div class="tile">
+              <div class="th">Pi TEMP</div>
+              <div class="tv"><b id="v-temp">52.6°C</b></div>
+              <div class="bar"><i id="temp-bar" style="width:48%"></i></div>
+            </div>
+            <div class="tile">
+              <div class="th">DISK</div>
+              <div class="tv"><b id="v-disk">67%</b></div>
+              <div class="bar"><i id="disk-bar" style="width:67%"></i></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SIMPLE -->
+        <section class="view" id="view-simple">
+          <div class="simple-brand">N O V A</div>
+          <div class="simple-main">
+            <div class="gauge">
+              <div class="webgl" id="s-dial-down"></div>
+              <div class="readout"><b id="sv-down">118.0</b> <small>Mbps</small></div>
+              <div class="caption">DOWNLOAD</div>
+            </div>
+            <div class="gauge">
+              <div class="webgl" id="s-dial-up"></div>
+              <div class="readout"><b id="sv-up">36.0</b> <small>Mbps</small></div>
+              <div class="caption">UPLOAD</div>
+            </div>
+            <div class="gauge">
+              <div class="webgl" id="s-dial-ping"></div>
+              <div class="readout"><b id="sv-ping">18</b> <small>ms</small></div>
+              <div class="caption">PING</div>
+            </div>
+          </div>
+          <div class="simple-foot"><span>Wi-Fi Connected</span><span>Ethernet Link</span></div>
+        </section>
+      </div>
     </div>
   </div>
-  <p class="footnote">Demo telemetry · copper 3D dials · Godot 4 target · Waveshare 8.8″</p>
-  <script src="app.js"></script>
+  <p class="footnote">Ultra-realistic WebGL dials · demo telemetry · target Godot 4 / Pi 5 · Waveshare 8.8″</p>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+  <script src="dials.js?v=4"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>

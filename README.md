@@ -1,5 +1,5 @@
 # NOVA Letterbox Preview
 
-Static web mockup for the Waveshare 8.8″ / 1920×480 dashboard (Simple + Complete).
+Ultra-realistic WebGL (Three.js) simulation of the NOVA 1920×480 dashboard.
 
-Open GitHub Pages after deploy, or open `index.html` locally.
+Live: https://velocityeu.github.io/nova-letterbox-preview/
