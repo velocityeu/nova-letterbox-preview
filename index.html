@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NOVA Letterbox Preview — 1920×480</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="chrome">
+    <div class="chrome-left">
+      <strong>NOVA</strong> letterbox preview
+      <span class="pill">1920×480</span>
+    </div>
+    <div class="chrome-right" role="tablist">
+      <button type="button" class="mode-btn active" data-mode="simple" id="btn-simple">Simple</button>
+      <button type="button" class="mode-btn" data-mode="complete" id="btn-complete">Complete</button>
+      <span class="hint">Tab to toggle</span>
+    </div>
+  </header>
+
+  <div class="stage-wrap">
+    <div class="stage" id="stage">
+      <!-- SIMPLE -->
+      <section class="view view-simple active" id="view-simple" aria-label="Simple view">
+        <div class="simple-title">N O V A</div>
+        <div class="dials-row">
+          <div class="dial" data-dial="down" data-max="200" data-unit="Mbps">
+            <canvas width="280" height="280"></canvas>
+            <div class="dial-label">DOWNLOAD Mbps</div>
+          </div>
+          <div class="dial" data-dial="up" data-max="200" data-unit="Mbps">
+            <canvas width="280" height="280"></canvas>
+            <div class="dial-label">UPLOAD Mbps</div>
+          </div>
+          <div class="dial" data-dial="ping" data-max="200" data-unit="ms">
+            <canvas width="280" height="280"></canvas>
+            <div class="dial-label">PING ms</div>
+          </div>
+        </div>
+        <div class="simple-footer">
+          <span><i class="ico wifi"></i> Wi-Fi Connected</span>
+          <span><i class="ico eth"></i> Ethernet Link</span>
+        </div>
+      </section>
+
+      <!-- COMPLETE -->
+      <section class="view view-complete" id="view-complete" aria-label="Complete view">
+        <div class="top-bar">
+          <div class="clock-box">
+            <div class="clock" id="clock">10:24:37</div>
+            <div class="date" id="date">Sat, 21 Sep 2026</div>
+          </div>
+          <div class="brand">
+            <div class="brand-name">NOVA</div>
+          </div>
+          <div class="ids">
+            <div><span class="muted">PUB IP</span> <span id="pub-ip">104.237.56.12</span></div>
+            <div><span class="muted">LOC IP</span> <span id="loc-ip">192.168.1.105</span></div>
+          </div>
+          <div class="vpn on" id="vpn">VPN CONNECTED</div>
+        </div>
+
+        <div class="complete-main">
+          <div class="dial dial-sm" data-dial="down2" data-max="100" data-unit="Mbps" data-value-el="val-down">
+            <canvas width="200" height="200"></canvas>
+            <div class="dial-readout"><span id="val-down">48.7</span> <small>Mbps</small></div>
+            <div class="dial-label">DOWNLOAD</div>
+          </div>
+          <div class="dial dial-sm" data-dial="up2" data-max="50" data-unit="Mbps" data-value-el="val-up">
+            <canvas width="200" height="200"></canvas>
+            <div class="dial-readout"><span id="val-up">18.3</span> <small>Mbps</small></div>
+            <div class="dial-label">UPLOAD</div>
+          </div>
+
+          <div class="center-stack">
+            <div class="panel spark">
+              <div class="panel-title">THROUGHPUT</div>
+              <canvas id="spark" width="420" height="70"></canvas>
+            </div>
+            <div class="panel path">
+              <div class="panel-title">NETWORK PATH</div>
+              <div class="path-nodes">
+                <div class="node"><div class="node-dot"></div><div>PI</div><small>192.168.1.101</small></div>
+                <div class="path-line"></div>
+                <div class="node"><div class="node-dot"></div><div>ROUTER</div><small>192.168.1.1</small></div>
+                <div class="path-line"></div>
+                <div class="node"><div class="node-dot"></div><div>INTERNET</div><small id="wan-path">203.0.113.42</small></div>
+              </div>
+            </div>
+            <div class="mini-gauges">
+              <div class="mini"><canvas id="cpu" width="72" height="72"></canvas><span>CPU <b id="cpu-val">23%</b></span></div>
+              <div class="mini"><canvas id="ram" width="72" height="72"></canvas><span>RAM <b id="ram-val">41%</b></span></div>
+            </div>
+          </div>
+
+          <div class="dial dial-sm" data-dial="ping2" data-max="120" data-unit="ms" data-value-el="val-ping">
+            <canvas width="200" height="200"></canvas>
+            <div class="dial-readout"><span id="val-ping">14</span> <small>ms</small></div>
+            <div class="dial-label">PING</div>
+          </div>
+        </div>
+
+        <div class="bottom-ribbon">
+          <div class="tile">
+            <div class="tile-title">Wi-Fi</div>
+            <div><strong id="ssid">NovaLab_5G</strong> · 5 GHz</div>
+            <div class="muted" id="rssi">−42 dBm</div>
+          </div>
+          <div class="tile">
+            <div class="tile-title">Ethernet</div>
+            <div><strong>1G LINK</strong></div>
+            <div class="muted">LINK ON</div>
+          </div>
+          <div class="tile">
+            <div class="tile-title">Pi TEMP</div>
+            <div><strong id="temp">48.7°C</strong></div>
+            <div class="bar"><i id="temp-bar" style="width:42%"></i></div>
+          </div>
+          <div class="tile">
+            <div class="tile-title">DISK</div>
+            <div><strong id="disk">31%</strong></div>
+            <div class="bar"><i id="disk-bar" style="width:31%"></i></div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <p class="footnote">Demo data · design lock: amber/copper sports dials · Godot 4 target · Waveshare 8.8″ HDMI</p>
+  <script src="app.js"></script>
+</body>
+</html>
