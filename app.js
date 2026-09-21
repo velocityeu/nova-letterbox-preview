@@ -275,6 +275,27 @@
     clock();
     setInterval(clock, 1000);
     setMode('complete');
+
+    function fitStage() {
+      const scaler = document.getElementById('scaler');
+      const chrome = document.querySelector('.chrome');
+      const note = document.getElementById('fit-note');
+      const pad = 8;
+      const availW = Math.max(280, window.innerWidth - pad);
+      const chromeH = chrome ? chrome.getBoundingClientRect().height : 48;
+      const noteH = note ? 36 : 28;
+      const availH = Math.max(120, window.innerHeight - chromeH - noteH - pad * 2);
+      // Fit entire 1920×480 stage on screen with no scroll
+      const scale = Math.min(availW / 1920, availH / 480);
+      document.documentElement.style.setProperty('--fit-scale', String(scale));
+      if (scaler) {
+        scaler.style.width = (1920 * scale) + 'px';
+        scaler.style.height = (480 * scale) + 'px';
+      }
+    }
+    fitStage();
+    window.addEventListener('resize', fitStage);
+    window.addEventListener('orientationchange', () => setTimeout(fitStage, 200));
     requestAnimationFrame(frame);
   } catch (e) { fail(e); }
 })();

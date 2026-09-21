@@ -18,11 +18,18 @@ html,body{margin:0;min-height:100%;background:#050607;color:var(--text);
 .btn.on{color:var(--copper2);background:linear-gradient(180deg,#2b2018,#15100c)}
 .hint{color:var(--muted);font-size:11px}
 
-/* No transform scale — scroll if needed */
-.wrap{padding:18px 10px 6px;overflow-x:auto;display:flex;justify-content:safe center}
-.stage{width:1920px;height:480px;flex:0 0 auto;border-radius:10px;
+/* Fit-to-phone: JS sets --fit-scale; scaler owns layout size so nothing scrolls */
+.wrap{padding:8px 0 4px;overflow:hidden;display:flex;justify-content:center;align-items:flex-start}
+.scaler{position:relative;width:calc(1920px * var(--fit-scale, 1));height:calc(480px * var(--fit-scale, 1));margin:0 auto}
+.stage{width:1920px;height:480px;position:absolute;top:0;left:0;
+  transform:scale(var(--fit-scale, 1));transform-origin:top left;border-radius:10px;
   background:radial-gradient(90% 70% at 50% 0%,#1a2029,#0b0e13 55%,#07090c);
-  box-shadow:0 24px 60px rgba(0,0,0,.65);position:relative}
+  box-shadow:0 24px 60px rgba(0,0,0,.65)}
+@media (max-width:900px){
+  .chrome{padding:8px 10px}
+  .hint{display:none}
+  .note{font-size:11px;padding:6px 10px 16px}
+}
 .bezel{position:absolute;inset:7px;border:1px solid rgba(201,133,74,.55);
   box-shadow:inset 0 0 0 1px rgba(201,133,74,.22),inset 0 0 50px rgba(0,0,0,.35);border-radius:6px;overflow:hidden}
 .view{position:absolute;inset:0;display:none;flex-direction:column;padding:10px 14px 11px;gap:8px}

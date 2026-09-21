@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>NOVA Letterbox — Design Match</title>
-<link rel="stylesheet" href="styles.css?v=5" />
+<link rel="stylesheet" href="styles.css?v=6" />
 </head>
 <body>
   <div id="err" hidden></div>
@@ -18,6 +18,7 @@
   </header>
 
   <div class="wrap">
+    <div class="scaler" id="scaler">
     <div class="stage" id="stage">
       <div class="bezel">
         <!-- COMPLETE = design lock -->
@@ -123,8 +124,9 @@
         </section>
       </div>
     </div>
+    </div>
   </div>
-  <p class="note">Canvas dials face-on (no WebGL) · 1920×480 · demo data</p>
-  <script src="app.js?v=5"></script>
+  <p class="note" id="fit-note">Fits your screen · 1920×480 design · rotate phone for larger view</p>
+  <script src="app.js?v=6"></script>
 </body>
 </html>
