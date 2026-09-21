@@ -1,5 +1,5 @@
 # NOVA Letterbox Preview
 
-Ultra-realistic WebGL (Three.js) simulation of the NOVA 1920×480 dashboard.
+Design-matched 1920×480 dashboard (canvas dials).
 
-Live: https://velocityeu.github.io/nova-letterbox-preview/
+https://velocityeu.github.io/nova-letterbox-preview/?v=5

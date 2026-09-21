@@ -3,118 +3,120 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>NOVA — Ultra-realistic letterbox</title>
-<link rel="stylesheet" href="styles.css?v=4" />
+<title>NOVA Letterbox — Design Match</title>
+<link rel="stylesheet" href="styles.css?v=5" />
 </head>
 <body>
-  <div id="boot-error" hidden></div>
+  <div id="err" hidden></div>
   <header class="chrome">
-    <div class="chrome-left"><strong>NOVA</strong> simulation <span class="pill">Three.js 3D dials</span><span class="pill">1920×480</span></div>
-    <div class="chrome-right">
-      <button type="button" class="mode-btn" id="btn-simple">Simple</button>
-      <button type="button" class="mode-btn active" id="btn-complete">Complete</button>
-      <span class="hint">Tab · 1 / 2</span>
+    <div class="left"><strong>NOVA</strong> preview <span class="pill">matches design</span></div>
+    <div class="right">
+      <button type="button" class="btn" id="btn-simple">Simple</button>
+      <button type="button" class="btn on" id="btn-complete">Complete</button>
+      <span class="hint">Tab · 1 / 2 · hard-refresh if cached</span>
     </div>
   </header>
 
-  <div class="stage-wrap">
+  <div class="wrap">
     <div class="stage" id="stage">
-      <div class="frame">
-        <!-- COMPLETE (default — matches design) -->
-        <section class="view active" id="view-complete">
-          <div class="top">
-            <div class="clock-box">
-              <div class="clock" id="clock">10:24:37</div>
-              <div class="date" id="date">Sat, 21 Sep 2026</div>
+      <div class="bezel">
+        <!-- COMPLETE = design lock -->
+        <section class="view on" id="complete">
+          <header class="top">
+            <div class="box clock">
+              <div class="time" id="clock">10:24:37</div>
+              <div class="day" id="date">Sat, 21 Sep 2026</div>
             </div>
-            <div class="brand"><i></i><span>N O V A</span><i></i></div>
+            <div class="logo"><span class="rules"></span><b>N O V A</b><span class="rules"></span></div>
             <div class="ips">
-              <div><em>PUB IP</em> <b id="pub">203.0.113.42</b></div>
-              <div><em>LOC IP</em> <b id="loc">192.168.1.101</b></div>
+              <div><span>PUB IP</span> 203.0.113.42</div>
+              <div><span>LOC IP</span> 192.168.1.101</div>
             </div>
-            <div class="vpn"><span class="lock"></span> VPN CONNECTED</div>
-          </div>
+            <div class="box vpn">🔒 VPN CONNECTED</div>
+          </header>
 
-          <div class="main">
+          <div class="cluster">
             <div class="gauge">
-              <div class="webgl" id="dial-down"></div>
-              <div class="readout"><b id="v-down">48.7</b> <small>Mbps</small></div>
-              <div class="caption">DOWNLOAD</div>
+              <canvas width="400" height="400" data-k="down" data-max="100"></canvas>
+              <div class="val"><em id="d-down">48.7</em> Mbps</div>
+              <div class="lab">DOWNLOAD</div>
             </div>
             <div class="gauge">
-              <div class="webgl" id="dial-up"></div>
-              <div class="readout"><b id="v-up">18.3</b> <small>Mbps</small></div>
-              <div class="caption">UPLOAD</div>
+              <canvas width="400" height="400" data-k="up" data-max="100"></canvas>
+              <div class="val"><em id="d-up">18.3</em> Mbps</div>
+              <div class="lab">UPLOAD</div>
             </div>
-            <div class="mid">
-              <div class="panel">
-                <div class="ph">THROUGHPUT (Mbps)</div>
-                <canvas id="spark" width="480" height="70"></canvas>
+
+            <div class="center">
+              <div class="card">
+                <div class="htag">THROUGHPUT (Mbps)</div>
+                <canvas id="spark" width="520" height="90"></canvas>
               </div>
-              <div class="panel path">
-                <div class="ph">NETWORK PATH</div>
-                <div class="path-row">
-                  <div class="node"><div class="icon pi"></div><b>PI</b><small>192.168.1.101</small></div>
-                  <div class="wire"></div>
-                  <div class="node"><div class="icon rt"></div><b>ROUTER</b><small>192.168.1.1</small></div>
-                  <div class="wire"></div>
-                  <div class="node"><div class="icon net"></div><b>INTERNET</b><small>203.0.113.42</small></div>
+              <div class="card path">
+                <div class="htag">NETWORK PATH</div>
+                <div class="pathline">
+                  <div class="n"><div class="ic"></div><b>PI</b><small>192.168.1.101</small></div>
+                  <div class="dash"></div>
+                  <div class="n"><div class="ic"></div><b>ROUTER</b><small>192.168.1.1</small></div>
+                  <div class="dash"></div>
+                  <div class="n"><div class="ic"></div><b>INTERNET</b><small>203.0.113.42</small></div>
                 </div>
               </div>
               <div class="rings">
-                <div class="ring"><canvas id="cpu" width="78" height="78"></canvas><div><span>CPU</span><b id="v-cpu">23%</b></div></div>
-                <div class="ring"><canvas id="ram" width="78" height="78"></canvas><div><span>RAM</span><b id="v-ram">41%</b></div></div>
+                <div class="rg"><canvas id="cpu" width="88" height="88"></canvas><div><i>CPU</i><b id="d-cpu">23%</b></div></div>
+                <div class="rg"><canvas id="ram" width="88" height="88"></canvas><div><i>RAM</i><b id="d-ram">41%</b></div></div>
               </div>
             </div>
+
             <div class="gauge">
-              <div class="webgl" id="dial-ping"></div>
-              <div class="readout"><b id="v-ping">14</b> <small>ms</small></div>
-              <div class="caption">PING</div>
+              <canvas width="400" height="400" data-k="ping" data-max="100"></canvas>
+              <div class="val"><em id="d-ping">14</em> ms</div>
+              <div class="lab">PING</div>
             </div>
           </div>
 
-          <div class="ribbon">
+          <footer class="ribbon">
             <div class="tile">
-              <div class="th">Wi-Fi</div>
-              <div class="tv"><span class="sig"></span> <b>NovaLab_5G</b> · 5 GHz</div>
-              <div class="ts">−42 dBm</div>
+              <div class="htag">Wi-Fi</div>
+              <div class="row"><b>NovaLab_5G</b> · 5 GHz</div>
+              <div class="sub">−42 dBm</div>
             </div>
             <div class="tile">
-              <div class="th">Ethernet</div>
-              <div class="tv"><span class="port"></span> <b>1G</b> · LINK ON</div>
-              <div class="ts"><i class="dot"></i> Active</div>
+              <div class="htag">Ethernet</div>
+              <div class="row"><b>Ethernet 1G</b> <span class="led"></span></div>
+              <div class="sub">LINK: 1 Gbps</div>
             </div>
             <div class="tile">
-              <div class="th">Pi TEMP</div>
-              <div class="tv"><b id="v-temp">52.6°C</b></div>
-              <div class="bar"><i id="temp-bar" style="width:48%"></i></div>
+              <div class="htag">Pi TEMP</div>
+              <div class="row"><b id="d-temp">52.6 °C</b></div>
+              <div class="meter"><i style="width:48%"></i></div>
             </div>
             <div class="tile">
-              <div class="th">DISK</div>
-              <div class="tv"><b id="v-disk">67%</b></div>
-              <div class="bar"><i id="disk-bar" style="width:67%"></i></div>
+              <div class="htag">DISK</div>
+              <div class="row"><b id="d-disk">67%</b></div>
+              <div class="meter"><i style="width:67%"></i></div>
             </div>
-          </div>
+          </footer>
         </section>
 
         <!-- SIMPLE -->
-        <section class="view" id="view-simple">
-          <div class="simple-brand">N O V A</div>
-          <div class="simple-main">
-            <div class="gauge">
-              <div class="webgl" id="s-dial-down"></div>
-              <div class="readout"><b id="sv-down">118.0</b> <small>Mbps</small></div>
-              <div class="caption">DOWNLOAD</div>
+        <section class="view" id="simple">
+          <div class="simple-logo">N O V A</div>
+          <div class="simple-row">
+            <div class="gauge lg">
+              <canvas width="440" height="440" data-k="down" data-max="200"></canvas>
+              <div class="val"><em id="s-down">118.0</em> Mbps</div>
+              <div class="lab">DOWNLOAD</div>
             </div>
-            <div class="gauge">
-              <div class="webgl" id="s-dial-up"></div>
-              <div class="readout"><b id="sv-up">36.0</b> <small>Mbps</small></div>
-              <div class="caption">UPLOAD</div>
+            <div class="gauge lg">
+              <canvas width="440" height="440" data-k="up" data-max="200"></canvas>
+              <div class="val"><em id="s-up">36.0</em> Mbps</div>
+              <div class="lab">UPLOAD</div>
             </div>
-            <div class="gauge">
-              <div class="webgl" id="s-dial-ping"></div>
-              <div class="readout"><b id="sv-ping">18</b> <small>ms</small></div>
-              <div class="caption">PING</div>
+            <div class="gauge lg">
+              <canvas width="440" height="440" data-k="ping" data-max="120"></canvas>
+              <div class="val"><em id="s-ping">18</em> ms</div>
+              <div class="lab">PING</div>
             </div>
           </div>
           <div class="simple-foot"><span>Wi-Fi Connected</span><span>Ethernet Link</span></div>
@@ -122,10 +124,7 @@
       </div>
     </div>
   </div>
-  <p class="footnote">Ultra-realistic WebGL dials · demo telemetry · target Godot 4 / Pi 5 · Waveshare 8.8″</p>
-
-  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
-  <script src="dials.js?v=4"></script>
-  <script src="app.js?v=4"></script>
+  <p class="note">Canvas dials face-on (no WebGL) · 1920×480 · demo data</p>
+  <script src="app.js?v=5"></script>
 </body>
 </html>
